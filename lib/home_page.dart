@@ -3,6 +3,8 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 import 'Services/notifi_service.dart';
 
+DateTime scheduleTime = DateTime.now();
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -13,7 +15,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-   DateTime scheduleTime=DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,24 +22,22 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          DatePickerTxt(scheduleTime: scheduleTime),
-          ScheduleBtn(scheduleTime: scheduleTime),
-        ],
-      )),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            DatePickerTxt(),
+            ScheduleBtn(),
+          ],
+        ),
+      ),
     );
   }
 }
 
 class DatePickerTxt extends StatefulWidget {
-  DatePickerTxt({
+  const DatePickerTxt({
     Key? key,
-    required this.scheduleTime,
   }) : super(key: key);
-
-  DateTime scheduleTime;
 
   @override
   State<DatePickerTxt> createState() => _DatePickerTxtState();
@@ -49,17 +48,12 @@ class _DatePickerTxtState extends State<DatePickerTxt> {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        DatePicker.showDatePicker(context,
-            showTitleActions: true,
-            minTime: DateTime(2018, 3, 5),
-            maxTime: DateTime(2023, 23, 30), onChanged: (date) {
-          setState(() {
-            widget.scheduleTime = date;
-          });
-          debugPrint('change $date');
-        }, onConfirm: (date) {
-          debugPrint('confirm $date');
-        }, currentTime: DateTime.now());
+        DatePicker.showDateTimePicker(
+          context,
+          showTitleActions: true,
+          onChanged: (date) => scheduleTime = date,
+          onConfirm: (date) {},
+        );
       },
       child: const Text(
         'Select Date Time',
@@ -72,19 +66,18 @@ class _DatePickerTxtState extends State<DatePickerTxt> {
 class ScheduleBtn extends StatelessWidget {
   const ScheduleBtn({
     Key? key,
-    required this.scheduleTime,
   }) : super(key: key);
-
-  final DateTime scheduleTime;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: const Text('Show notifications'),
+      child: const Text('Schedule notifications'),
       onPressed: () {
-        print(scheduleTime);
-        NotificationService()
-            .scheduleNotification(title: 'Sample title', body: 'It works!', scheduledNotificationDateTime: scheduleTime);
+        debugPrint('Notification Scheduled for $scheduleTime');
+        NotificationService().scheduleNotification(
+            title: 'Scheduled Notification',
+            body: '$scheduleTime',
+            scheduledNotificationDateTime: scheduleTime);
       },
     );
   }
