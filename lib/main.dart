@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'Services/notifi_service.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
+import 'Services/notifi_service.dart';
 import 'home_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService().initNotification();
+  tz.initializeTimeZones();
   runApp(const MyApp());
 }
 
