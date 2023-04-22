@@ -57,7 +57,7 @@ flutter_datetime_picker: ^1.5.1
 ```
 MIT License
 
-Copyright (c) 2022 Vijay R
+Copyright (c) 2023 Vijay R
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
