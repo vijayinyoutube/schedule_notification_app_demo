@@ -52,7 +52,7 @@ class NotificationService {
           tz.local,
         ),
         await notificationDetails(),
-        androidAllowWhileIdle: true,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }
